@@ -1,0 +1,23 @@
+function nivcontourOK
+global I1 I2 F a1 niv
+close
+LOGICIEL12
+
+imggray0
+
+h = waitbar(0,'Calcul en cours...');
+hw=findobj(h,'Type','Patch');
+set(hw,'EdgeColor',[0 0 0],'FaceColor',[.33 .725 .84]) % changes the color to green
+for i=1:(length(I1)*niv)
+    waitbar(i/(length(I1)*niv))
+end
+close(h) 
+
+subplot(122),imcontour(I2,niv);
+title('Niveaux de contours','Fontangle','Italic');
+% xlabel(['(',mI1s,' x ',nI1s,')'],'FontSize',8,'Fontangle','Italic');
+axis off
+set (F,'visible','on');
+axes('units','pixels','position',[20 50 350 300]), imcontour(I2,niv),title([a1,' en niveaux de contours']...
+    ,'color',[0 0 0],'Fontangle','Italic');
+axis off

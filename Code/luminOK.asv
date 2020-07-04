@@ -1,0 +1,22 @@
+function luminOK
+global I1 I2 a1 mI2s nI2s certifL1 F Texte0 Texte1 Texte2 Texte3 Texte4 Texte5
+if certifL1==1
+close
+LOGICIEL12
+
+I1=I2;
+set (F,'visible','on');
+axes('units','pixels','position',[20 50 350 300]), imshow(I1)
+impixelinfo
+else
+    figure('name','avertissement','color',[.5 .5 .5],'menubar','none'...
+        ,'resize','off','position',[250 200 500 400]);
+uicontrol('position',[10 100 414 303],'CData',imread('systeme\averti.jpg'),'Enable','inactive');
+uicontrol('style','text','position',[150 50 280 80],...
+'string','aucune modification effectuée !!'...
+,'fontname','arial black','fontsize',12,'foregroundcolor',[1 0.8 0.2]...
+,'backgroundcolor',[.5 .5 .5]);
+uicontrol('position',[380 30 80 30],'string','OK','fontsize',12,...
+    'fontname','arial black','foregroundcolor',[.5 .4 .2],'callback','close'...
+    ,'cdata',imread('systeme\d2.jpg'));
+end

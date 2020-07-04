@@ -1,0 +1,10 @@
+function imggray0
+global flag I1 imggray
+
+if flag==4 
+    imggray=rgb2gray(I1);
+elseif flag==2
+    imggray=I1;
+elseif flag==5
+    imggray=uint8(I1*255);
+end  

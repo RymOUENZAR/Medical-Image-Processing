@@ -1,0 +1,6 @@
+function essai
+global F I1 I2
+close(F)
+open(F)
+axes('units','pixels','position',[20 50 350 300]);
+imshow(I1);

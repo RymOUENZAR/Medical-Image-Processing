@@ -1,0 +1,94 @@
+function levelset2
+global I1 Cx Cy niteration alfaset sigmaset mI1 nI1 a1
+Img=double(I1(:,:,1));
+Img=imresize(Img,[200 200]);
+Cy=str2double(get(Cy,'string'));
+Cx=str2double(get(Cx,'string'));
+alfa=str2double(get(alfaset,'string'));
+niter=str2double(get(niteration,'string'));
+sigma=str2double(get(sigmaset,'string'));
+
+if (isnan(Cx)) || (isnan(Cy)) || (isnan(alfa)) || (isnan(niter)) || (isnan(sigma))
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[350 200 400 200]);
+
+   uicontrol('style','text','position',[150 50 280 80],...
+'string','Vous avez entré une valeur non-numérique'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[380 30 80 30],'string','OK','callback','close');
+elseif (Cy<1) || (Cx<1)
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[250 200 300 200]);
+
+   uicontrol('style','text','position',[150 50 280 80],...
+'string','Les coordonnées du pixels doivent être supérieur ou égal à 1'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[380 30 80 30],'string','OK','callback','close');
+elseif alfa>0
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[250 200 300 200]);
+
+   uicontrol('style','text','position',[150 50 280 80],...
+'string','Alpha doit être négative'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[380 30 80 30],'string','OK','callback','close');
+elseif niter<1
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[250 200 300 200]);
+
+   uicontrol('style','text','position',[150 50 280 80],...
+'string','Le nombre d''itérations doit être supérieur à 1'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[380 30 80 30],'string','OK','callback','close');
+else
+
+M=mI1/2; N=nI1/2;
+dim=size(Img);
+c1=mI1/dim(1); c2=nI1/dim(2);
+Cx=Cx/c1; Cy=Cy/c2;
+%    CALCUL D'UNE ENERGIE EXTERNE QUI DEPLACE LA COURBE DE NIVEAU ZERO VERS
+%                             LES FRONTIERES D'OBJET
+% sigma=4.2; %1.5
+G=fspecial('gaussian',15,sigma);
+Img_smooth=conv2(Img,G,'same'); 
+[Ix,Iy]=gradient(Img_smooth); 
+f=Ix.^2+Iy.^2;
+g=1./(1+f);% Fonction indicatrice de contours g = 1/1+|DELTA(G)*I|^2
+epsilon=1.5;
+timestep=5;
+mu=0.2/timestep;
+lambda=5;
+[nrow, ncol]=size(Img);  
+c0=2;  
+initialLSF=c0*ones(nrow,ncol);
+w=8;
+initialLSF(Cy-2:Cy+2, Cx-2:Cx+2)=0;
+initialLSF(Cy-2:Cy+2, Cx-2:Cx+2)=-c0;
+u=initialLSF;
+subplot(122), imshow(Img/255); colormap(gray); hold on;                        
+for n=1:niter
+    u=EVOLUTION(u, g ,lambda, mu, alfa, epsilon, timestep, 1);     
+    if mod(n,10)==0
+        pause(0.001);
+        subplot(122),imshow(Img/255);colormap(gray);hold on;
+        [c,h] = contour(u,[0 0],'g'); 
+        iterNum=[num2str(n), ' itérations/',num2str(niter)];        
+        title(iterNum);
+        hold off;
+    end
+end
+Img=imresize(Img,[mI1 nI1]);
+totalIterNum=[num2str(n), ' itérations'];  
+subplot(222),imshow(Img/255),title(['Contour Final, ', totalIterNum]);
+colormap(gray);hold on;
+u2=imresize(u,[mI1 nI1]);
+u2=imcomplement(u2);
+u2=uint8(u2*255);
+[c,h] = contour(u2,[0 0],'g');
+subplot(224),imshow(u2),title('Résultat de la Segmentation');
+I2=Img/255;
+end

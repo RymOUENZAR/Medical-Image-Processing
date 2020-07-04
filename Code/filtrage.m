@@ -1,0 +1,56 @@
+function filtrage
+global I1 a1 popfilt fpara1 fpara2 fparat1 fparat2 ftail filtapp fpara3 fparat3 filtcertif
+
+filtcertif=0;
+% ***************************** FIGURE ********************************
+figure('name','Filtrage de l''image','color',[1 1 1],'menubar','none'...
+    ,'position',[400 250 600 350],'resize','off');
+
+% ************************** AFFICHER L'IMAGE *****************************        
+subplot(122),imshow(I1)
+
+title(a1,'color',[0 0 0],'Fontangle','Italic')
+
+% ************************** FILTRAGE ******************************
+% Titre
+filtre=uipanel('units','pixels','position',[40 100 250 200],'backgroundcolor',[1 1 1]...
+    ,'highlightcolor',[.63 .63 .63],'title','Filtres :','fontsize',10,'fontangle','italic');
+% Choix
+popfilt=uicontrol('style','popup','parent',filtre,'position',[60 150 120 30],'string'...
+    ,'Aucun|Median|Moyenneur|Gaussien','backgroundcolor',[1 1 1]...
+    ,'fontsize',10,'callback','filtragepop');
+% Valeur 1
+fpara1=uicontrol('style','edit','parent',filtre,'position',[130 75 70 20],'backgroundcolor',[1 1 1]...
+    ,'fontsize',10,'string','3','visible','off');
+% Paramètre 1 (Lignes)
+fparat1=uicontrol('style','text','parent',filtre,'position',[50 75 50 25],'string','lignes :'...
+    ,'fontsize',10,'fontangle','italic','backgroundcolor',[1 1 1]...
+    ,'horizontalalignment','right','visible','off');
+% Valeur 2
+fpara2=uicontrol('style','edit','parent',filtre,'position',[130 45 70 20],'backgroundcolor',[1 1 1]...
+    ,'fontsize',10,'string','3','visible','off');
+% Paramètre 2 (Colonnes)
+fparat2=uicontrol('style','text','parent',filtre,'position',[50 45 50 25],'string','colones :'...
+    ,'fontsize',10,'fontangle','italic','backgroundcolor',[1 1 1]...
+    ,'horizontalalignment','right','visible','off');
+% Titre
+ftail=uicontrol('style','text','parent',filtre,'position',[10 110 150 25],'string','Taille du filtre :'...
+    ,'fontsize',10,'fontangle','italic','fontweight','bold','backgroundcolor',[1 1 1],'visible','off');
+% Valeur 3
+fpara3=uicontrol('style','edit','parent',filtre,'position',[130 15 70 20],'backgroundcolor',[1 1 1],'visible','off'...
+    ,'fontsize',10,'string','0.5');
+% Paramètre 3 (Sigma, Alpha)
+fparat3=uicontrol('style','text','parent',filtre,'position',[50 15 50 25],'string','sigma :'...
+    ,'fontsize',10,'fontangle','italic','backgroundcolor',[1 1 1]...
+    ,'horizontalalignment','right','visible','off');
+
+% *********************** BOUTONS ***************************
+% Bouton de visualisation
+filtapp=uicontrol('position',[130 60 80 30],'string','Visualiser','FontSize',8,'Fontangle','Italic',...
+    'FontWeight','bold','callback','filtrageappliq');
+% Bouton annuler
+uicontrol('position',[180 15 80 30],'string','Annuler','FontSize',8,'Fontangle','Italic',...
+    'FontWeight','bold','callback','close');
+% Bouton ok
+uicontrol('position',[80 15 80 30],'string','OK','FontSize',8,'Fontangle','Italic',...
+    'FontWeight','bold','callback','filtrageOK');

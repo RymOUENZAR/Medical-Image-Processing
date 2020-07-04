@@ -1,0 +1,134 @@
+function filtrageappliq
+global I1 I2 popfilt fpara1 fpara3 filtcertif kI1
+methodpop=get(popfilt,'value');
+switch methodpop
+    case 1 % Aucun
+        I2=I1;
+        subplot(122),imshow(I2)
+    case 2 % Médian
+        if kI1==3
+        I2r=I1(:,:,1);
+        I2v=I1(:,:,2);
+        I2b=I1(:,:,3);
+        I2r2=medfilt2(I2r);
+        I2v2=medfilt2(I2v);
+        I2b2=medfilt2(I2b);
+        I2(:,:,1)=I2r2;
+        I2(:,:,2)=I2v2;
+        I2(:,:,3)=I2b2;
+        else
+           I2=medfilt2(I1);
+        end
+        subplot(122),imshow(I2)
+   case 3  %   moyenneur
+       flin=str2double(get(fpara1,'string'));
+       if (isnan(flin))
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[500 300 400 150]);
+
+   uicontrol('style','text','position',[50 50 280 60],...
+'string','Vous avez entré une valeur non-numérique'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[160 30 80 30],'string','OK','callback','close');
+
+       elseif (flin<=0)
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[500 300 400 150]);
+
+   uicontrol('style','text','position',[50 50 280 60],...
+'string','La nombre de lignes et de colonnes doit être positive'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[160 30 80 30],'string','OK','callback','close');
+
+       else
+       filtr=fspecial('average',[flin flin]);
+       I2=imfilter(I1,filtr);
+       subplot(122),imshow(I2)
+       end
+    case 4  %   gaussien
+        flin=str2double(get(fpara1,'string'));
+        fcol=str2double(get(fpara2,'string'));
+        sigma=str2double(get(fpara3,'string'));
+        if (isnan(flin)) || (isnan(sigma))
+     figure('name','Erreur','color',[1 1 1],'menubar','none'...
+        ,'resize','off','position',[500 300 400 150]);
+
+   uicontrol('style','text','position',[50 50 280 60],...
+'string','Vous avez entré une valeur non-numérique'...
+,'fontsize',10,'fontangle','italic'...
+,'backgroundcolor',[1 1 1]);
+uicontrol('position',[160 30 80 30],'string','OK','callback','close');
+
+               elseif (flin<=0) || (fcol<=0)
+            figure('name','Erreur','color',[.5 .5 .5],'menubar','none'...
+        ,'resize','off','position',[250 200 500 400]);
+uicontrol('position',[40 100 356 303],'CData',imread('systeme\erreur.jpg'),'Enable','inactive');
+   uicontrol('style','text','position',[150 50 330 80],...
+'string','Le nombre de lignes et de colones ne doit pas ètre nul ou négatif !!'...
+,'fontname','arial black','fontsize',11,'foregroundcolor',[1 0.8 0.2]...
+,'backgroundcolor',[.5 .5 .5]);
+uicontrol('position',[380 30 80 30],'string','OK','fontsize',12,...
+    'fontname','arial black','foregroundcolor',[0.5 .4 .2],'callback','close'...
+    ,'cdata',imread('systeme\d2.jpg'));
+
+               elseif sigma<=0
+        figure('name','Erreur','color',[.5 .5 .5],'menubar','none'...
+        ,'resize','off','position',[250 200 500 400]);
+uicontrol('position',[40 100 356 303],'CData',imread('systeme\erreur.jpg'),'Enable','inactive');
+   uicontrol('style','text','position',[150 50 330 80],...
+'string','La valeur de Sigma ne doit pas ètre négative !!'...
+,'fontname','arial black','fontsize',11,'foregroundcolor',[1 0.8 0.2]...
+,'backgroundcolor',[.5 .5 .5]);
+uicontrol('position',[380 30 80 30],'string','OK','fontsize',12,...
+    'fontname','arial black','foregroundcolor',[0.5 .4 .2],'callback','close'...
+    ,'cdata',imread('systeme\d2.jpg'));
+              
+       else
+        filtr=fspecial('gaussian',[flin fcol],sigma);
+        I2=imfilter(I1,filtr);
+        subplot(122),imshow(I2)
+        end
+    case 5 %    Sobel
+        filtr=fspecial('sobel');
+        I2=imfilter(I1,filtr);
+        subplot(122),imshow(I2)
+    case 6 %    Prewitt
+        filtr=fspecial('prewitt');
+        I2=imfilter(I1,filtr);
+        subplot(122),imshow(I2)
+    case 7  %   laplacien
+        alph=str2double(get(fpara1,'string'))/100;
+        if isnan(alph)
+            figure('name','Erreur','color',[.5 .5 .5],'menubar','none'...
+        ,'resize','off','position',[250 200 500 400]);
+uicontrol('position',[40 100 356 303],'CData',imread('systeme\erreur.jpg'),'Enable','inactive');
+   uicontrol('style','text','position',[150 50 330 80],...
+'string','vous avez entré une valeur non-numérique pour alpha !!'...
+,'fontname','arial black','fontsize',11,'foregroundcolor',[1 0.8 0.2]...
+,'backgroundcolor',[.5 .5 .5]);
+uicontrol('position',[380 30 80 30],'string','OK','fontsize',12,...
+    'fontname','arial black','foregroundcolor',[0.5 .4 .2],'callback','close'...
+    ,'cdata',imread('systeme\d2.jpg'));
+            
+        elseif (alph<0) || (alph>1)
+             figure('name','Erreur','color',[.5 .5 .5],'menubar','none'...
+        ,'resize','off','position',[250 200 500 400]);
+uicontrol('position',[40 100 356 303],'CData',imread('systeme\erreur.jpg'),'Enable','inactive');
+   uicontrol('style','text','position',[150 50 330 80],...
+'string','La valeur de Alpha doit ètre entre de [0] à [100] !!'...
+,'fontname','arial black','fontsize',11,'foregroundcolor',[1 0.8 0.2]...
+,'backgroundcolor',[.5 .5 .5]);
+uicontrol('position',[380 30 80 30],'string','OK','fontsize',12,...
+    'fontname','arial black','foregroundcolor',[0.5 .4 .2],'callback','close'...
+    ,'cdata',imread('systeme\d2.jpg'));
+        else
+        filtr=fspecial('laplacian',alph);
+        I2=imfilter(I1,filtr);
+        subplot(122),imshow(I2)
+        end
+    
+end
+
+filtcertif=1;

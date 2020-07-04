@@ -1,0 +1,31 @@
+function ouvrir
+global  img1 hh
+global filename ext path file img m n ms ns ind map flag 
+global RGBm indexm binm grism incom zoombutton binaireb grisb RGBb indexedb
+global f12 f13 f21 f22 f23 f24 f28 rec1 rec2 rec3 rec4 col saveb recalagb mosaikb 
+[file,path]=uigetfile('*.bmp;*.jpg;*.png;*.tif;*.gif;*.dcm','sélectionnez une image',[path,'\',filename,ext]);
+[path,filename,ext]=fileparts([path,file]);   
+img1=[path,'\',filename,ext];
+hh = imshow(img1);
+[img,flag] = getimage(hh);
+nouveau    
+findobjon    
+    
+clc;
+[ind,map]=imread(img1);
+menuon
+
+set([rec2 rec3 rec4],'enable','off');
+set([saveb recalagb mosaikb ],'enable','on');
+m=size(img,1);
+n=size(img,2);
+ms=num2str(m);
+ns=num2str(n);
+axes('units','pixels','position',[20 50 350 300]);
+imshow(img),title([filename,ext],'color',[0.502 0 0.502]...
+                    ,'fontsize',12,'fontname','arial black')...
+                    ,xlabel(['taille :(',ms,' x ',ns,')'],'fontname','arial black'...
+                    ,'fontsize',10,'color',[0 0 1]);
+impixelinfo;
+clc
+

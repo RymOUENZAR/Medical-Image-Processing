@@ -1,0 +1,31 @@
+function contrast
+global mI1s nI1s a1 I1 a certifC2
+certifC2=0;
+% ***************************** FIGURE ********************************
+figure('name','Amélioration du contraste','position',[400 250 500 300],'resize','off'...
+    ,'menubar','none','color',[1 1 1]);
+
+% ************************** AFFICHER L'IMAGE *****************************        
+subplot(122),imshow(I1)
+
+title(a1,'color',[0 0 0],'Fontangle','Italic')
+
+% *********************** AMELIORATION DU CONTRASTE ***************************
+% Titre
+uicontrol('style','text','position',[30 200 200 30],'string','Améliorer le contraste :'...
+    ,'fontsize',10,'fontangle','italic','fontweight','bold','backgroundcolor',[1 1 1]);
+% Texte
+uicontrol('style','text','position',[30 150 200 30],'string','Facteur de contraste :'...
+    ,'fontsize',10,'fontangle','italic','backgroundcolor',[1 1 1]);
+% Valeur
+a=uicontrol('style','edit','position',[90 130 70 20],'backgroundcolor',[1 1 1]...
+    ,'string','1','fontsize',10,'tooltipstring','Facteur de contraste','max',1);
+
+uicontrol('position',[87 80 80 30],'string','Visualiser','FontSize',8,'Fontangle','Italic',...
+    'FontWeight','bold''callback','contrast1');
+
+uicontrol('position',[150 30 80 30],'string','Annuler','FontSize',8,'Fontangle','Italic',...
+    'FontWeight','bold','callback','close');
+
+uicontrol('position',[30 30 80 30],'string','OK'...
+    ,'callback','controk1');

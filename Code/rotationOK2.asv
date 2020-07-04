@@ -1,0 +1,11 @@
+function rotationOK2
+global imrot2 im filename ext travb
+I1=imrot2;
+close
+    findobjoff
+    precedon
+    subplot(122),imshow(im),title([filename,ext]...
+        ,'fontname','arial black','fontsize',10,'color',[.5 0 .5]);
+    impixelinfo
+    set(travb,'visible','on');
+    menuoff

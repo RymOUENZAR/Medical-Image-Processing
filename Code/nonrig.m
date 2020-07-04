@@ -1,0 +1,29 @@
+function nonrig
+global ssd cc MI
+% *********************** FIGURE ***************************
+figure('name','Choix','position',[500 300 300 200],'resize','off'...
+    ,'menubar','none','color',[1 1 1]);
+
+% *********************** CHOIX ***************************
+% Choix
+choi3=uibuttongroup('units','pixels','position',[45 70 200 120],'title','Mesure de similarité :'...
+    ,'backgroundcolor',[1 1 1],'fontsize',10,...
+    'highlightcolor',[.63 .63 .63],'fontangle','italic','fontweight','bold');
+% SSD
+ssd=uicontrol('style','radio','parent',choi3,'position',[73 65 100 30]...
+    ,'string','SSD','fontsize',10,...
+    'backgroundcolor',[1 1 1]);
+% CC
+cc=uicontrol('style','radio','parent',choi3,'position',[73 35 100 30]...
+    ,'string','CC','fontsize',10,...
+    'backgroundcolor',[1 1 1]);
+% MI
+MI=uicontrol('style','radio','parent',choi3,'position',[73 5 100 30]...
+    ,'string','MI','fontsize',10,...
+    'backgroundcolor',[1 1 1]);
+
+% *********************** BOUTONS ***************************
+% Bouton annuler
+uicontrol('position',[160 20 80 30],'string','Annuler','callback','close');
+% Bouton ok
+uicontrol('position',[60 20 80 30],'string','OK','callback','mirt2D_example1');

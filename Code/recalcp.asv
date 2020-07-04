@@ -1,0 +1,3 @@
+function recalcp
+global Ir I1
+cpselect(Ir,I1);

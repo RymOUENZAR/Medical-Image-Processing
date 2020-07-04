@@ -1,0 +1,12 @@
+function char_rigid
+global input_points base_points I1 Ir
+load recale_points
+
+t_concord = cp2tform(input_points,base_points,'linear conformal');
+mrec=size(I1,1);
+nrec=size(I1,2);
+Ir_registered = imtransform(Ir, t_concord,...
+                                'XData',[1 mrec],...
+                                'YData',[1 nrec]);
+figure, imshow(Ir_registered)
+

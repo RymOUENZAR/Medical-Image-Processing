@@ -1,0 +1,14 @@
+function contrast1
+global I1 a mI1 nI1 I2 kI1 certifC1
+
+h=imhist(I1);
+Hc=cumsum(h);
+for i=1:mI1
+    for j=1:nI1
+        T(i,j)=255*(Hc(I1(i,j))/(dim(1)*dim(2))); %Ou T=255*(Hc(p)/(dim(1)*dim(2)));
+    end
+end
+T=mat2gray(T); %rendre la matrice en image niveau de gris
+
+subplot(122),imshow(I2);
+certifC1=1;

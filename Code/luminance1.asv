@@ -1,0 +1,22 @@
+function luminance1
+global I1 b mI1 nI1 I2 kI1 certifL1
+I2=I1;
+b=str2double(get(b,'string'));
+for i=1:mI1
+    for j=1:nI1
+        if kI1==1
+            I2(i,j,1)=b+I1(i,j,1);
+            if I2(i,j,:)>255
+                I2(i,j,:)=255;
+            end
+        else
+            I2(i,j)=b+I1(i,j);
+            if I2(i,j)>255
+                I2(i,j)=255;
+            end
+        end
+    end
+end
+
+subplot(122),imshow(I2);
+certifL1=1;

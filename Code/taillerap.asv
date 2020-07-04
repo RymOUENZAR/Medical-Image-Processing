@@ -1,0 +1,30 @@
+function taillerap
+global mI1s nI1s a1 nouvtail rap certifT2 I1
+certifT2=0;
+close
+% *********************** FIGURE ***************************
+figure('name','Redimensionner','position',[400 250 500 300],'resize','off'...
+    ,'menubar','none','color',[1 1 1]);
+
+% *********************** AFFICHER L'IMAGE ***************************
+subplot(122), imshow(I1); title(a1,'color',[0 0 0],'Fontangle','Italic')
+xlabel(['(',mI1s,' x ',nI1s,')'],'FontSize',8,'Fontangle','Italic');
+
+% *********************** REDIMENSIONNEMENT ***************************
+uicontrol('style','text','position',[30 200 200 30],'string','Redimensionner :'...
+    ,'fontsize',10,'fontangle','italic','fontweight','bold','backgroundcolor',[1 1 1]);
+% Texte
+uicontrol('style','text','position',[30 150 200 30],'string','Facteur d''échelle :'...
+    ,'fontsize',11,'backgroundcolor',[1 1 1]);
+
+rap=uicontrol('style','edit','position',[90 130 70 25],'backgroundcolor',[1 1 1]...
+    ,'string','1','fontsize',11,'tooltipstring','Facteur d''échelle','max',1);
+
+tailappliq=uicontrol('position',[87 80 80 30],'string','Visualiser'...
+    ,'callback','tailappliq');
+
+tailannl=uicontrol('position',[150 30 80 30],'string','Annuler'...
+    ,'callback','close');
+
+tailok=uicontrol('position',[30 30 80 30],'string','OK'...
+    ,'callback','tailok');

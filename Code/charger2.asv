@@ -1,0 +1,19 @@
+% function [Y,map2]=charger2;
+global I1
+global f21 f22 f23
+global f31 f32 f33
+global f41 f42 f43 f44 f45 f46
+global f51 f52 f53 f61 f62 f63 f64
+global f71 f72
+global invbut tailbut kI1 mI1 nI1 a1
+[a2,b2]= uigetfile({'*.jpg;*.tif;*.png;*.gif;*.bmp;'},path,'C:\Users\user\Documents\USTO\Master 2\SIVR\PFE\Nouveau dossier');
+file=fullfile(b2,a2);
+I2=imread(file);
+[mI2 nI2 kI2]=size(I2);
+mI2s=num2str(mI2);
+nI2s=num2str(nI2);
+Ir=I2;
+LOGICIEL12
+subplot(122),imshow(I1); title(a1,'color',[0 0 0],'Fontangle','Italic')
+xlabel(['(',mI1s,' x ',nI1s,')'],'FontSize',8,'Fontangle','Italic');
+    impixelinfo
